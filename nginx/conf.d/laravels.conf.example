@@ -1,0 +1,65 @@
+server {
+    server_name www.laravels.test;
+    listen       80;
+
+    large_client_header_buffers 4 32k;
+    client_max_body_size 300m;
+    client_body_buffer_size 512k;
+
+    root /workspace/laravels-dir/public;
+    index index.php;
+
+    location / {
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Port $server_port;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_http_version 1.1;
+        proxy_redirect off;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://php7.2:5200/;
+        proxy_read_timeout 900s;
+    }
+
+    location /vendor {
+        root /workspace/laravels-dir/public;
+    }
+
+    location /assets {
+        root /workspace/laravels-dir/public;
+    }
+
+    location /laravel-u-editor {
+        root /workspace/laravels-dir/public;
+    }
+
+    location /exports {
+        root /workspace/laravels-dir/public;
+    }
+
+    location /api/ {
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Port $server_port;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_http_version 1.1;
+        proxy_redirect off;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://php7.2:5200;
+        proxy_read_timeout 900s;
+    }
+
+    location /laravel-u-editor-server/ {
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Port $server_port;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_http_version 1.1;
+        proxy_redirect off;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://php7.2:5200;
+        proxy_read_timeout 900s;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+}

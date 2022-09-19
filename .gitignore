@@ -1,0 +1,13 @@
+mysql/data
+
+nginx/nginx.conf
+nginx/logs/*.log
+nginx/conf/*.conf
+
+redis/redis.conf
+redis/data/*
+!redis/data/.gitkeep
+
+www/*
+!www/.gitkeep
+!www/index.html.example
